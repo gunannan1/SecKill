@@ -13,4 +13,5 @@ public class MiaoshaGoods {
 	private Integer stockCount;
 	private Date startDate;
 	private Date endDate;
+
 }
