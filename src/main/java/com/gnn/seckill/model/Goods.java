@@ -3,8 +3,8 @@ package com.gnn.seckill.model;
 import lombok.*;
 
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
+@AllArgsConstructor //生成一个无参数的构造方法
+@NoArgsConstructor //生成一个包含所有参数的构造方法
 public class Goods {
 	private Long id;
 	private String goodsName;

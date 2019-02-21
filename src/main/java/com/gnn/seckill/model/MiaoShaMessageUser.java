@@ -9,8 +9,8 @@ import java.util.Date;
  * 消息中心用戶存储关系表
  */
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
+@AllArgsConstructor //生成一个无参数的构造方法
+@NoArgsConstructor //生成一个包含所有参数的构造方法
 public class MiaoShaMessageUser implements Serializable {
 
     private Long id ;

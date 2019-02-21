@@ -5,8 +5,8 @@ import lombok.*;
 import java.util.Date;
 
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
+@AllArgsConstructor //生成一个无参数的构造方法
+@NoArgsConstructor //生成一个包含所有参数的构造方法
 public class Order {
 	private Long id;
 	private Long userId;

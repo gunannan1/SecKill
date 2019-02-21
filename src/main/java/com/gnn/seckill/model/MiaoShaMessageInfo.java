@@ -10,8 +10,8 @@ import java.util.Date;
  * 消息中心主体表
  */
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
+@AllArgsConstructor //生成一个无参数的构造方法
+@NoArgsConstructor //生成一个包含所有参数的构造方法
 public class MiaoShaMessageInfo implements Serializable {
 
     private Integer id ;
