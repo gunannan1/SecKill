@@ -4,14 +4,16 @@ import lombok.*;
 
 import java.util.Date;
 
+/**
+ * 专供秒杀的商品
+ */
 @Data
-@AllArgsConstructor //生成一个无参数的构造方法
-@NoArgsConstructor //生成一个包含所有参数的构造方法
+@AllArgsConstructor
+@NoArgsConstructor
 public class MiaoshaGoods {
 	private Long id;
 	private Long goodsId;
 	private Integer stockCount;
 	private Date startDate;
 	private Date endDate;
-
 }

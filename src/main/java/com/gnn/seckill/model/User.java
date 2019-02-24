@@ -4,10 +4,14 @@ import lombok.*;
 
 import java.util.Date;
 
+/**
+ *用户
+ */
 @Data
-@AllArgsConstructor //生成一个无参数的构造方法
-@NoArgsConstructor //生成一个包含所有参数的构造方法
+@AllArgsConstructor
+@NoArgsConstructor
 public class User {
+
 	private Long id;
 	private String username;
 	private long phone;
@@ -18,4 +22,5 @@ public class User {
 	private Date registerDate;
 	private Date lastLoginDate;
 	private Integer loginCount;
+
 }

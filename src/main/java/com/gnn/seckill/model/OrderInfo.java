@@ -4,10 +4,13 @@ import lombok.*;
 
 import java.util.Date;
 
+/**
+ * 订单信息
+ */
 @Data
-@AllArgsConstructor //生成一个无参数的构造方法
-@NoArgsConstructor //生成一个包含所有参数的构造方法
-public class Order {
+@AllArgsConstructor
+@NoArgsConstructor
+public class OrderInfo {
 	private Long id;
 	private Long userId;
 	private Long goodsId;
