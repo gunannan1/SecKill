@@ -1,23 +1,26 @@
 package com.gnn.seckill.exception;
 
 
-import com.gnn.seckill.enums.ResultEnum;
+import com.gnn.seckill.common.enums.ResultStatus;
 
+/**
+ * 定义全局异常
+ */
 public class GlobleException extends RuntimeException {
 
 
-    private ResultEnum status;
+    private ResultStatus status;
 
-    public GlobleException(ResultEnum status){
+    public GlobleException(ResultStatus status){
         super("code: "+status.getCode()+", msg: "+status.getMessage());
         this.status = status;
     }
 
-    public ResultEnum getStatus() {
+    public ResultStatus getStatus() {
         return status;
     }
 
-    public void setStatus(ResultEnum status) {
+    public void setStatus(ResultStatus status) {
         this.status = status;
     }
 }
