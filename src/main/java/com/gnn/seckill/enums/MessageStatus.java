@@ -1,6 +1,6 @@
 package com.gnn.seckill.enums;
 
-public class MessageEnum {
+public class MessageStatus {
 
     public static  final Integer ZORE = 0;
     /**
@@ -45,5 +45,6 @@ public class MessageEnum {
             return message;
         }
     }
+
 
 }

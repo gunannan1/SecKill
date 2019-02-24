@@ -1,6 +1,5 @@
 package com.gnn.seckill.enums;
 
-
 /**
  * 普通返回类
  * 1打头 系统系列错误
@@ -11,7 +10,10 @@ package com.gnn.seckill.enums;
  * 6 订单错误
  * @author qiurunze
  */
-public enum ResultEnum {
+public enum ResultStatus {
+    /**
+     * 通用
+     */
     SUCCESS(0, "成功"),
     FAILD(-1, "失败"),
     EXCEPTION(-1, "系统异常"),
@@ -34,7 +36,7 @@ public enum ResultEnum {
     CODE_FAIL(200002,"验证码不一致!"),
 
     /**
-     * check
+     * 校验
      */
     BIND_ERROR (30001,"参数校验异常：%s"),
     ACCESS_LIMIT_REACHED (30002,"请求非法!"),
@@ -46,26 +48,27 @@ public enum ResultEnum {
     MOBILE_NOT_EXIST (30009,"手机号不存在!"),
     PASSWORD_ERROR (30010,"密码错误!"),
     USER_NOT_EXIST(30011,"用户不存在！"),
-
-    /**
-     * 订单模块
-     */
-    ORDER_NOT_EXIST(60001,"订单不存在"),
-
     /**
      * 秒杀模块
      */
     MIAO_SHA_OVER(40001,"商品已经秒杀完毕"),
     REPEATE_MIAOSHA(40002,"不能重复秒杀"),
-    MIAOSHA_FAIL(40003,"秒杀失败");
+    MIAOSHA_FAIL(40003,"秒杀失败"),
+
 
     /**
-     * 商品模块
+     * 订单模块
      */
+    ORDER_NOT_EXIST(50001,"订单不存在");
+
+
+
+
+
     private int code;
     private String message;
 
-    private ResultEnum(int code, String message) {
+    private ResultStatus(int code, String message) {
         this.code = code;
         this.message = message;
     }
@@ -98,7 +101,9 @@ public enum ResultEnum {
         return this.getName();
     }
 
-    private ResultEnum(Object... args) {
+    private ResultStatus(Object... args) {
         this.message = String.format(this.message, args);
     }
+
+
 }
