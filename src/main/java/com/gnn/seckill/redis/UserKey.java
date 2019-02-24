@@ -1,5 +1,8 @@
 package com.gnn.seckill.redis;
 
+/**
+ * 用户相关的key
+ */
 public class UserKey extends  BasePrefix{
     public static final int TOKEN_EXPIRE = 3600 *24*2;
     public static UserKey token = new UserKey(TOKEN_EXPIRE,"tk") ;

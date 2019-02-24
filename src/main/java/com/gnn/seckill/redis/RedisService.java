@@ -268,7 +268,13 @@ public class RedisService {
 
 		}
 	}
-	
+
+    /**
+     * 把任意类型转换成字符串
+     * @param value
+     * @param <T>
+     * @return
+     */
 	public static <T> String beanToString(T value) {
 		if(value == null) {
 			return null;
@@ -285,7 +291,13 @@ public class RedisService {
 		}
 	}
 
-	@SuppressWarnings("unchecked")
+    /**
+     *  把字符串转换成任意类型
+     * @param str
+     * @param clazz
+     * @param <T>
+     * @return
+     */
 	public static <T> T stringToBean(String str, Class<T> clazz) {
 		if(str == null || str.length() <= 0 || clazz == null) {
 			 return null;
