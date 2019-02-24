@@ -44,7 +44,7 @@ public class UserService {
 
 
     /**
-     * 通过token得到用户
+     * 通过token得到用户，同时延长有效期
      * @param response
      * @param token
      * @return
@@ -171,7 +171,7 @@ public class UserService {
         String password =loginVo.getPassword();
         User user = getUserName(mobile);
         if(user == null) {
-            throw new GlobleException(MOBILE_NOT_EXIST);
+            throw new GlobleException(USER_NOT_EXIST);
         }
 
         String dbPass = user.getPassword();

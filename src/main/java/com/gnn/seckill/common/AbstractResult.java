@@ -36,6 +36,7 @@ public class AbstractResult {
     }
 
     public AbstractResult withError(int code, String message) {
+        this.status=ResultStatus.FAILD;
         this.code = code;
         this.message = message;
         return this;
@@ -45,6 +46,7 @@ public class AbstractResult {
         this.status = ResultStatus.SUCCESS;
         return this;
     }
+
     public ResultStatus getStatus() {
         return this.status;
     }

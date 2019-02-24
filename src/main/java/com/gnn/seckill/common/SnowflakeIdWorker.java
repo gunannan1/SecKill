@@ -80,7 +80,7 @@ public class SnowflakeIdWorker {
      * @return
      */
     public static long getOrderId(long workerId, long datacenterId){
-        SnowflakeIdWorker idWorker = new SnowflakeIdWorker(0, 0);
+        SnowflakeIdWorker idWorker = new SnowflakeIdWorker(workerId, datacenterId);
         return idWorker.nextId();
     }
 

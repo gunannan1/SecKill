@@ -30,7 +30,7 @@ public class GlobleExceptionHandler {
         if(e instanceof GlobleException){
             GlobleException ex= (GlobleException)e;
             return Result.error(ex.getStatus());
-        }else if( e instanceof BindException){
+        }else if( e instanceof BindException){ //绑定异常，地址被占用
             BindException ex = (BindException) e  ;
             List<ObjectError> errors = ex.getAllErrors();
             ObjectError error = errors.get(0);
