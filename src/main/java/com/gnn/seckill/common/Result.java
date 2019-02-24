@@ -1,29 +1,31 @@
-package com.gnn.seckill.result;
+package com.gnn.seckill.common;
 
-import com.gnn.seckill.enums.ResultEnum;
+
+import com.gnn.seckill.enums.ResultStatus;
 
 import java.io.Serializable;
 
 public class Result<T> extends AbstractResult implements Serializable {
-    private static final long serialVersionUID = 867933019328199779L;
+
+    private static final long serialVersionUID = -7808670524705541057L;
     private T data;
     private Integer count;
 
-    protected Result(ResultEnum status, String message) {
+    protected Result(ResultStatus status, String message) {
         super(status, message);
     }
-    protected Result(ResultEnum status) {
+    protected Result(ResultStatus status) {
         super(status);
     }
     public static <T> Result<T> build() {
-        return new Result(ResultEnum.SUCCESS, (String)null);
+        return new Result(ResultStatus.SUCCESS, (String)null);
     }
 
     public static <T> Result<T> build(String message) {
-        return new Result(ResultEnum.SUCCESS, message);
+        return new Result(ResultStatus.SUCCESS, message);
     }
 
-    public static <T> Result<T> error(ResultEnum status) {
+    public static <T> Result<T> error(ResultStatus status) {
         return new Result<T>(status);
     }
 
