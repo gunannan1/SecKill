@@ -6,7 +6,7 @@ import java.util.regex.Pattern;
 import org.apache.commons.lang3.StringUtils;
 
 /**
- * 检验是不是手机号
+ * 手机格式校验
  */
 public class ValidatorUtil {
 	
