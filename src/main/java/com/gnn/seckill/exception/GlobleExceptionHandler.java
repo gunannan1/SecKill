@@ -1,6 +1,6 @@
 package com.gnn.seckill.exception;
 
-import com.gnn.seckill.common.resultbean.ResultGeekQ;
+import com.gnn.seckill.common.Result;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.validation.BindException;
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
-import static com.gnn.seckill.common.enums.ResultStatus.*;
+import static com.gnn.seckill.enums.ResultStatus.*;
 
 
 /**
@@ -25,11 +25,11 @@ public class GlobleExceptionHandler {
     private static Logger logger =  LoggerFactory.getLogger(GlobleExceptionHandler.class);
 
     @ExceptionHandler(value=Exception.class)
-    public ResultGeekQ<String> exceptionHandler(HttpServletRequest request , Exception e){
+    public Result<String> exceptionHandler(HttpServletRequest request , Exception e){
         e.printStackTrace();
         if(e instanceof GlobleException){
             GlobleException ex= (GlobleException)e;
-            return ResultGeekQ.error(ex.getStatus());
+            return Result.error(ex.getStatus());
         }else if( e instanceof BindException){
             BindException ex = (BindException) e  ;
             List<ObjectError> errors = ex.getAllErrors();
@@ -39,9 +39,9 @@ public class GlobleExceptionHandler {
              * 打印堆栈信息
              */
             logger.error(String.format(msg, msg));
-            return ResultGeekQ.error(BIND_ERROR);
+            return Result.error(BIND_ERROR);
         }else {
-            return ResultGeekQ.error(SYSTEM_ERROR);
+            return Result.error(SYSTEM_ERROR);
         }
     }
 }

@@ -1,7 +1,7 @@
 package com.gnn.seckill.exception;
 
 
-import com.gnn.seckill.common.enums.ResultStatus;
+import com.gnn.seckill.enums.ResultStatus;
 
 /**
  * 定义全局异常
