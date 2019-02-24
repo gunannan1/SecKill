@@ -5,13 +5,13 @@ import javax.validation.Payload;
 import java.lang.annotation.*;
 
 /**
- * 检验手机号格式,自定义注解
+ * 自定义手机号格式校验注解
  */
 @Target({ElementType.METHOD, ElementType.FIELD, ElementType.ANNOTATION_TYPE, ElementType.CONSTRUCTOR, ElementType.PARAMETER})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-@Constraint(validatedBy = {IsMobileValidator.class})
-public @interface IsMobile {
+@Constraint(validatedBy = {MobileValidator.class})
+public @interface MobileCheck {
     boolean required() default true ;
 
     String message() default "手机号码格式有误!";

@@ -6,12 +6,15 @@ import org.apache.commons.lang3.StringUtils;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
-public class IsMobileValidator implements ConstraintValidator<IsMobile, String> {
+/**
+ * 手机号格式校验
+ */
+public class MobileValidator implements ConstraintValidator<MobileCheck, String> {
 
     private boolean require = false ;
 
     @Override
-    public void initialize(IsMobile isMobile) {
+    public void initialize(MobileCheck isMobile) {
         require = isMobile.required() ;
     }
 
