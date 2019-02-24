@@ -1,6 +1,6 @@
 package com.gnn.seckill.vo;
 
-import com.gnn.seckill.model.Order;
+import com.gnn.seckill.model.OrderInfo;
 import lombok.*;
 
 @Data
@@ -8,17 +8,17 @@ import lombok.*;
 @NoArgsConstructor
 public class OrderDetailVo {
 	private GoodsVo goods;
-	private Order order;
+	private OrderInfo order;
 	public GoodsVo getGoods() {
 		return goods;
 	}
 	public void setGoods(GoodsVo goods) {
 		this.goods = goods;
 	}
-	public Order getOrder() {
+	public OrderInfo getOrder() {
 		return order;
 	}
-	public void setOrder(Order order) {
+	public void setOrder(OrderInfo order) {
 		this.order = order;
 	}
 }

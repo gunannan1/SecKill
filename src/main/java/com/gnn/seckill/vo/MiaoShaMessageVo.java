@@ -10,7 +10,8 @@ import java.util.Date;
 @NoArgsConstructor
 public class MiaoShaMessageVo implements Serializable {
 
-    private static final long serialVersionUID = -1341750239648941486L;
+
+    private static final long serialVersionUID = 7793625661747223332L;
     private Integer id ;
 
     private Long userId;
