@@ -20,7 +20,7 @@ public interface UserDao {
 
     @Insert("insert into user (id , username ,phone,password ,email, salt ,head,register_date,last_login_date," +
             "login_count) value (#{id},#{username},#{phone},#{password},#{email},#{salt},#{head},#{registerDate}," +
-            "#{lastLoginDate},#{loginCount}) ")
+            "#{lastLoginDate},#{loginCount})")
     @Options(useGeneratedKeys = true, keyProperty = "id", keyColumn = "id")
     public void addUser(User user);
 

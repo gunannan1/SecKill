@@ -18,8 +18,8 @@ public interface MiaoShaMessageDao {
 	@Select("<script>select * from miaosha_message_user where 1=1 <if test=\"messageId !=null \">and messageId = #{messageId} </if></script>")
 	public List<MiaoShaMessageUser> listMiaoShaMessageUser(@Param("messageId") String messageId);
 
-	@Insert("insert into miaosha_message (id , messageid ,content , create_time ,status,over_time,message_type ,send_type , good_name , price,messageHead)" +
-			"value (#{id},#{messageId},#{content},#{createTime},#{status},#{overTime},#{messageType},#{sendType},#{goodName},#{price},#{messageHead}) ")
+	@Insert("insert into miaosha_message (id , messageid ,content , create_time ,status,over_time,message_type ,send_type , good_name , price)" +
+			"value (#{id},#{messageId},#{content},#{createTime},#{status},#{overTime},#{messageType},#{sendType},#{goodName},#{price}) ")
 	@Options(useGeneratedKeys = true, keyProperty = "id", keyColumn = "id")
 	public void insertMiaoShaMessage(MiaoShaMessageInfo miaoShaMessage);
 
