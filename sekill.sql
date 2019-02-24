@@ -60,16 +60,17 @@ CREATE TABLE `miaosha_message` (
   `send_type` int(1) DEFAULT '3' COMMENT '发送类型 0 app 1 pc 2 ios',
   `good_name` varchar(50) DEFAULT '' COMMENT '商品名称',
   `price` decimal(10,2) DEFAULT '0.00' COMMENT '商品价格',
+  `messageHead` varchar(50) DEFAULT '' COMMENT '消息头',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of miaosha_message
 -- ----------------------------
-INSERT INTO `miaosha_message` VALUES ('1', '533324506110885888', '尊敬的用户你好，你已经成功注册！', null, '0', null, null, '0', null, null);
-INSERT INTO `miaosha_message` VALUES ('2', '533324506110885888', '尊敬的用户你好，你已经成功注册！', null, '0', null, null, '0', null, null);
-INSERT INTO `miaosha_message` VALUES ('3', '533324506110885888', '尊敬的用户你好，你已经成功注册！', '2019-01-11', '0', null, null, '0', null, null);
-INSERT INTO `miaosha_message` VALUES ('4', '533324506110885888', '尊敬的用户你好，你已经成功注册！', '2019-01-11', '0', null, null, '0', null, null);
+INSERT INTO `miaosha_message` VALUES ('1', '533324506110885888', '尊敬的用户你好，你已经成功注册！', null, '0', null, null, '0', null, null,null);
+INSERT INTO `miaosha_message` VALUES ('2', '533324506110885888', '尊敬的用户你好，你已经成功注册！', null, '0', null, null, '0', null, null,null);
+INSERT INTO `miaosha_message` VALUES ('3', '533324506110885888', '尊敬的用户你好，你已经成功注册！', '2019-01-11', '0', null, null, '0', null, null,null);
+INSERT INTO `miaosha_message` VALUES ('4', '533324506110885888', '尊敬的用户你好，你已经成功注册！', '2019-01-11', '0', null, null, '0', null, null,null);
 
 -- ----------------------------
 -- Table structure for miaosha_message_user
@@ -140,8 +141,8 @@ CREATE TABLE `user` (
 -- ----------------------------
 -- Table structure for order_info
 -- ----------------------------
-DROP TABLE IF EXISTS `order`;
-CREATE TABLE `order` (
+DROP TABLE IF EXISTS `order_info`;
+CREATE TABLE `order_info` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `user_id` bigint(20) DEFAULT NULL COMMENT '用户ID',
   `goods_id` bigint(20) DEFAULT NULL COMMENT '商品ID',
@@ -159,10 +160,10 @@ CREATE TABLE `order` (
 -- ----------------------------
 -- Records of order
 -- ----------------------------
-INSERT INTO `order` VALUES ('1561', '18912341234', '1', null, 'iphoneX', '1', '0.01', '1', '0', '2017-12-14 22:49:10', null);
-INSERT INTO `order` VALUES ('1562', '18912341234', '2', null, '华为Meta9', '1', '0.01', '1', '0', '2017-12-14 22:55:42', null);
-INSERT INTO `order` VALUES ('1563', '18912341234', '4', null, '小米6', '1', '0.01', '1', '0', '2017-12-16 16:19:23', null);
-INSERT INTO `order` VALUES ('1564', '18912341234', '3', null, 'iphone8', '1', '0.01', '1', '0', '2017-12-16 16:35:20', null);
+INSERT INTO `order_info` VALUES ('1561', '18912341234', '1', null, 'iphoneX', '1', '0.01', '1', '0', '2017-12-14 22:49:10', null);
+INSERT INTO `order_info` VALUES ('1562', '18912341234', '2', null, '华为Meta9', '1', '0.01', '1', '0', '2017-12-14 22:55:42', null);
+INSERT INTO `order_info` VALUES ('1563', '18912341234', '4', null, '小米6', '1', '0.01', '1', '0', '2017-12-16 16:19:23', null);
+INSERT INTO `order_info` VALUES ('1564', '18912341234', '3', null, 'iphone8', '1', '0.01', '1', '0', '2017-12-16 16:35:20', null);
 
 -- -- ----------------------------
 -- -- Table structure for user
