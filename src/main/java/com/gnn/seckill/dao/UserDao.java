@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 public interface UserDao {
 
     @Select("select * from user where username = #{username}")
-    public User getByNickname(@Param("username") String nickname ) ;
+    public User getByUsername(@Param("username") String nickname ) ;
 
     @Select("select * from user where id = #{id}")
     public User getById(@Param("id") long id ) ;
