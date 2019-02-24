@@ -49,6 +49,9 @@ public class AccessInterceptor  extends HandlerInterceptorAdapter{
 //				return true;
 //			}
 			User user = getUser(request, response);
+			if(user==null){
+                response.sendRedirect("/login");
+            }
 			UserContext.setUser(user);
 			AccessLimit accessLimit = hm.getMethodAnnotation(AccessLimit.class);
 			if(accessLimit == null) {
