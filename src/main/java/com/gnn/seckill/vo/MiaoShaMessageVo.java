@@ -38,6 +38,4 @@ public class MiaoShaMessageVo implements Serializable {
 
     private BigDecimal price ;
 
-    private String messageHead ;
-
 }

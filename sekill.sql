@@ -54,23 +54,22 @@ CREATE TABLE `miaosha_message` (
   `messageid` bigint(20) NOT NULL COMMENT '分布式id',
   `content` text COMMENT '消息内容',
   `create_time` date DEFAULT NULL COMMENT '创建时间',
-  `status` int(1) NOT NULL COMMENT '1 有效 2 失效 ',
+  `status` int(1) NOT NULL COMMENT '0 有效 1 失效 ',
   `over_time` datetime DEFAULT NULL COMMENT '结束时间',
-  `message_type` int(1) DEFAULT '3' COMMENT '0 秒杀消息 1 购买消息 2 推送消息',
-  `send_type` int(1) DEFAULT '3' COMMENT '发送类型 0 app 1 pc 2 ios',
+  `message_type` int(1) DEFAULT '3' COMMENT '0 秒杀消息 1 购买消息 2 系统消息',
+  `send_type` int(1) DEFAULT '3' COMMENT '发送类型 0 pc 1 android 2 ios',
   `good_name` varchar(50) DEFAULT '' COMMENT '商品名称',
   `price` decimal(10,2) DEFAULT '0.00' COMMENT '商品价格',
-  `messageHead` varchar(50) DEFAULT '' COMMENT '消息头',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of miaosha_message
 -- ----------------------------
-INSERT INTO `miaosha_message` VALUES ('1', '533324506110885888', '尊敬的用户你好，你已经成功注册！', null, '0', null, null, '0', null, null,null);
-INSERT INTO `miaosha_message` VALUES ('2', '533324506110885888', '尊敬的用户你好，你已经成功注册！', null, '0', null, null, '0', null, null,null);
-INSERT INTO `miaosha_message` VALUES ('3', '533324506110885888', '尊敬的用户你好，你已经成功注册！', '2019-01-11', '0', null, null, '0', null, null,null);
-INSERT INTO `miaosha_message` VALUES ('4', '533324506110885888', '尊敬的用户你好，你已经成功注册！', '2019-01-11', '0', null, null, '0', null, null,null);
+INSERT INTO `miaosha_message` VALUES ('1', '533324506110885888', '尊敬的用户你好，你已经成功注册！', null, '0', null, null, '0', null, null);
+INSERT INTO `miaosha_message` VALUES ('2', '533324506110885888', '尊敬的用户你好，你已经成功注册！', null, '0', null, null, '0', null, null);
+INSERT INTO `miaosha_message` VALUES ('3', '533324506110885888', '尊敬的用户你好，你已经成功注册！', '2019-01-11', '0', null, null, '0', null, null);
+INSERT INTO `miaosha_message` VALUES ('4', '533324506110885888', '尊敬的用户你好，你已经成功注册！', '2019-01-11', '0', null, null, '0', null, null);
 
 -- ----------------------------
 -- Table structure for miaosha_message_user
@@ -122,7 +121,7 @@ DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '用户ID',
   `username` varchar(50) NOT NULL COMMENT '用户名',
-  `phone` bigint(20) NOT NULL COMMENT '手机号',
+  `phone` varchar(50)  COMMENT '手机号',
   `password` varchar(32) DEFAULT NULL COMMENT 'MD5(MD5(pass明文+固定salt) + salt)',
   `email` varchar(50) DEFAULT NULL COMMENT '邮箱',
   `salt` varchar(10) DEFAULT NULL COMMENT '盐值',

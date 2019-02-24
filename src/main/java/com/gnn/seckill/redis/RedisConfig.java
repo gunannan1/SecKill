@@ -13,7 +13,7 @@ public class RedisConfig {
     private int port;
     private int timeout;//秒
     private String password;
-    private int poolMaxTotal;
+    private int poolMaxTotal;//最大
     private int poolMaxIdle;
     private int poolMaxWait;//秒
     public String getHost() {
