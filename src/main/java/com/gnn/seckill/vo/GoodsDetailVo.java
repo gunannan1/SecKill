@@ -1,6 +1,6 @@
 package com.gnn.seckill.vo;
 
-import com.gnn.seckill.model.User;
+import com.gnn.seckill.model.MiaoshaUser;
 import lombok.*;
 
 
@@ -11,6 +11,6 @@ public class GoodsDetailVo {
 	private int miaoshaStatus = 0;
 	private int remainSeconds = 0;
 	private GoodsVo goods ;
-	private User user;
+	private MiaoshaUser miaoshaUser;
 
 }

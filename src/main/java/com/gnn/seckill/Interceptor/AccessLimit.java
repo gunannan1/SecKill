@@ -1,4 +1,4 @@
-package com.gnn.seckill.access;
+package com.gnn.seckill.Interceptor;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
