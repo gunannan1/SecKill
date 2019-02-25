@@ -11,7 +11,7 @@ import java.util.List;
 
 @Service
 public class GoodsService {
-
+	
 	@Autowired
 	GoodsDao goodsDao;
 
@@ -30,7 +30,7 @@ public class GoodsService {
 		int ret = goodsDao.reduceStock(g);
 		return ret > 0;
 	}
-
-
-
+	
+	
+	
 }

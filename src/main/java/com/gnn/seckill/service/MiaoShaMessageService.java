@@ -25,11 +25,13 @@ public class MiaoShaMessageService {
 
     @Transactional(rollbackFor = Exception.class)
     public void insertMs(MiaoShaMessageVo miaoShaMessageVo){
+        //创建MiaoShaMessageUser
         MiaoShaMessageUser mu = new MiaoShaMessageUser() ;
         mu.setUserId(miaoShaMessageVo.getUserId());
         mu.setMessageId(miaoShaMessageVo.getMessageId());
         messageDao.insertMiaoShaMessageUser(mu);
 
+        //创建MiaoShaMessageInfo
         MiaoShaMessageInfo miaoshaMessage = new MiaoShaMessageInfo();
         miaoshaMessage.setContent(miaoShaMessageVo.getContent());
 //        miaoshaMessage.setCreateTime(new Date());

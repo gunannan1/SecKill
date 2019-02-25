@@ -1,8 +1,5 @@
-package com.gnn.seckill.redis;
+package com.gnn.seckill.redis.prefix;
 
-/**
- * 商品相关key
- */
 public class GoodsKey extends BasePrefix{
 
 	private GoodsKey(int expireSeconds, String prefix) {

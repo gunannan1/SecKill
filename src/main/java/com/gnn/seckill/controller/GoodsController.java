@@ -1,11 +1,12 @@
 package com.gnn.seckill.controller;
 
+
 import com.gnn.seckill.common.Result;
-import com.gnn.seckill.model.User;
-import com.gnn.seckill.redis.GoodsKey;
+import com.gnn.seckill.model.MiaoshaUser;
 import com.gnn.seckill.redis.RedisService;
+import com.gnn.seckill.redis.prefix.GoodsKey;
 import com.gnn.seckill.service.GoodsService;
-import com.gnn.seckill.service.UserService;
+import com.gnn.seckill.service.MiaoShaUserService;
 import com.gnn.seckill.vo.GoodsDetailVo;
 import com.gnn.seckill.vo.GoodsVo;
 import org.apache.commons.lang3.StringUtils;
@@ -21,7 +22,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.thymeleaf.context.WebContext;
 import org.thymeleaf.spring5.view.ThymeleafViewResolver;
 
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
@@ -32,7 +32,7 @@ public class GoodsController extends BaseController {
     private static Logger log = LoggerFactory.getLogger(GoodsController.class);
 
     @Autowired
-    private UserService userService;
+    private MiaoShaUserService userService;
 
     @Autowired
     private RedisService redisService;
@@ -53,19 +53,17 @@ public class GoodsController extends BaseController {
      * */
     @RequestMapping(value="/to_list", produces="text/html")
     @ResponseBody
-    public String list(HttpServletRequest request, HttpServletResponse response, Model model, User user) {
-        if(user!=null){
-            model.addAttribute("user", user);
-        }
+    public String list(HttpServletRequest request, HttpServletResponse response, Model model, MiaoshaUser user) {
+        model.addAttribute("user", user);
         List<GoodsVo> goodsList = goodsService.listGoodsVo();
         model.addAttribute("goodsList", goodsList);
-        return render(request,response,model,"goods_list",GoodsKey.getGoodsList,"");
+        return render(request,response,model,"goods_list", GoodsKey.getGoodsList,"");
     }
 
 
     @RequestMapping(value="/to_detail2/{goodsId}",produces="text/html")
     @ResponseBody
-    public String detail2(HttpServletRequest request, HttpServletResponse response, Model model, User user,
+    public String detail2(HttpServletRequest request, HttpServletResponse response, Model model,MiaoshaUser user,
                           @PathVariable("goodsId")long goodsId) {
         model.addAttribute("user", user);
 
@@ -108,7 +106,7 @@ public class GoodsController extends BaseController {
     }
 
     /**
-     * 数据库很少使用long的　，　id 正常使一般使用　snowflake 分布式自增id
+     * 数据库很少使用long的　id 正常使一般使用　snowflake 分布式自增id
      * @param model
      * @param user
      * @param goodsId
@@ -116,7 +114,7 @@ public class GoodsController extends BaseController {
      */
     @RequestMapping(value="/detail/{goodsId}")
     @ResponseBody
-    public Result<GoodsDetailVo> detail(HttpServletRequest request, HttpServletResponse response, Model model, User user,
+    public Result<GoodsDetailVo> detail(HttpServletRequest request, HttpServletResponse response, Model model, MiaoshaUser user,
                                         @PathVariable("goodsId")long goodsId) {
         Result<GoodsDetailVo> result = Result.build();
         GoodsVo goods = goodsService.getGoodsVoByGoodsId(goodsId);
@@ -137,7 +135,7 @@ public class GoodsController extends BaseController {
         }
         GoodsDetailVo vo = new GoodsDetailVo();
         vo.setGoods(goods);
-        vo.setUser(user);
+        vo.setMiaoshaUser(user);
         vo.setRemainSeconds(remainSeconds);
         vo.setMiaoshaStatus(miaoshaStatus);
         result.setData(vo);

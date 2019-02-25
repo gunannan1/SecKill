@@ -1,8 +1,5 @@
-package com.gnn.seckill.redis;
+package com.gnn.seckill.redis.prefix;
 
-/**
- * 定义key前缀
- */
 public interface KeyPrefix {
 
     public int expireSeconds() ;

@@ -2,13 +2,13 @@ package com.gnn.seckill.service;
 
 
 import com.gnn.seckill.common.SnowflakeIdWorker;
+import com.gnn.seckill.dao.MiaoShaUserDao;
 import com.gnn.seckill.enums.MessageStatus;
-import com.gnn.seckill.dao.UserDao;
 import com.gnn.seckill.exception.GlobleException;
-import com.gnn.seckill.model.User;
+import com.gnn.seckill.model.MiaoshaUser;
 import com.gnn.seckill.rabbitmq.MQSender;
 import com.gnn.seckill.redis.RedisService;
-import com.gnn.seckill.redis.UserKey;
+import com.gnn.seckill.redis.prefix.MiaoShaUserKey;
 import com.gnn.seckill.utils.MD5Util;
 import com.gnn.seckill.utils.UUIDUtil;
 import com.gnn.seckill.vo.LoginVo;
@@ -28,13 +28,13 @@ import static com.gnn.seckill.enums.ResultStatus.*;
 
 
 @Service
-public class UserService {
+public class MiaoShaUserService {
 
     public static final String COOKIE_NAME_TOKEN = "token" ;
-    private static Logger logger = LoggerFactory.getLogger(UserService.class);
+    private static Logger logger = LoggerFactory.getLogger(MiaoShaUserService.class);
 
     @Autowired
-    private UserDao userDao;
+    private MiaoShaUserDao miaoShaUserDao ;
 
     @Autowired
     private RedisService redisService ;
@@ -43,18 +43,12 @@ public class UserService {
     private MQSender sender ;
 
 
-    /**
-     * 通过token得到用户，同时延长有效期
-     * @param response
-     * @param token
-     * @return
-     */
-    public User getByToken(HttpServletResponse response , String token) {
+    public MiaoshaUser getByToken(HttpServletResponse response , String token) {
 
         if(StringUtils.isEmpty(token)){
             return null ;
         }
-        User user =redisService.get(UserKey.token,token, User.class) ;
+        MiaoshaUser user =redisService.get(MiaoShaUserKey.token,token,MiaoshaUser.class) ;
         if(user!=null) {
             addCookie(response, token, user);
         }
@@ -62,86 +56,63 @@ public class UserService {
 
     }
 
-    /**
-     * 通过用户名得到用户
-     * @param nickName
-     * @return
-     */
-    public User getUserName(String nickName) {
+    public MiaoshaUser getByNickName(String nickName) {
         //取缓存
-        User user = redisService.get(UserKey.getByUserName, ""+nickName, User.class);
+        MiaoshaUser user = redisService.get(MiaoShaUserKey.getByNickName, ""+nickName, MiaoshaUser.class);
         if(user != null) {
             return user;
         }
         //取数据库
-        user = userDao.getByUsername(nickName);
+        user = miaoShaUserDao.getByNickname(nickName);
         if(user != null) {
-            redisService.set(UserKey.getByUserName, ""+nickName, user);
+            redisService.set(MiaoShaUserKey.getByNickName, ""+nickName, user);
         }
         return user;
     }
 
 
-    /**
-     * 更新密码
-     * @param token
-     * @param nickName
-     * @param formPass
-     * @return
-     */
     // http://blog.csdn.net/tTU1EvLDeLFq5btqiK/article/details/78693323
     public boolean updatePassword(String token, String nickName, String formPass) {
         //取user
-        User user = getUserName(nickName);
+        MiaoshaUser user = getByNickName(nickName);
         if(user == null) {
             throw new GlobleException(MOBILE_NOT_EXIST);
         }
         //更新数据库
-        User toBeUpdate = new User();
-        toBeUpdate.setUsername(nickName);
+        MiaoshaUser toBeUpdate = new MiaoshaUser();
+        toBeUpdate.setNickname(nickName);
         toBeUpdate.setPassword(MD5Util.formPassToDBPass(formPass, user.getSalt()));
-        userDao.updatePassword(toBeUpdate);
+        miaoShaUserDao.update(toBeUpdate);
         //处理缓存
-        redisService.delete(UserKey.getByUserName, ""+nickName);
+        redisService.delete(MiaoShaUserKey.getByNickName, ""+nickName);
         user.setPassword(toBeUpdate.getPassword());
-        redisService.set(UserKey.token, token, user);
+        redisService.set(MiaoShaUserKey.token, token, user);
         return true;
     }
 
 
-    /**
-     * 用户注册
-     * @param response
-     * @param userName
-     * @param passWord
-     * @param salt
-     * @return
-     */
     public boolean register(HttpServletResponse response , String userName , String passWord , String salt) {
-        //创建用户
-        User miaoShaUser =  new User();
-        miaoShaUser.setUsername(userName);
+        MiaoshaUser miaoShaUser =  new MiaoshaUser();
+        miaoShaUser.setNickname(userName);
         String DBPassWord =  MD5Util.formPassToDBPass(passWord , salt);
         miaoShaUser.setPassword(DBPassWord);
         miaoShaUser.setRegisterDate(new Date());
         miaoShaUser.setSalt(salt);
-
-
+        miaoShaUser.setNickname(userName);
         try {
-            userDao.addUser(miaoShaUser);
-            User user = userDao.getByUsername(miaoShaUser.getUsername());
+            miaoShaUserDao.insertMiaoShaUser(miaoShaUser);
+            MiaoshaUser user = miaoShaUserDao.getByNickname(miaoShaUser.getNickname());
             if(user == null){
                 return false;
             }
 
-            //创建消息vo
             MiaoShaMessageVo vo = new MiaoShaMessageVo();
-            vo.setContent(MessageStatus.ContentEnum.system_message_register.getMessage());
+            vo.setContent("尊敬的用户你好，你已经成功注册！");
             vo.setCreateTime(new Date());
             vo.setMessageId(SnowflakeIdWorker.getOrderId(0,0));
             vo.setSendType(0);
             vo.setStatus(0);
-            vo.setMessageType(MessageStatus.messageType.system_message.getType());
+            vo.setMessageType(MessageStatus.messageType.system_message.ordinal());
             vo.setUserId(miaoShaUser.getId());
             sender.sendRegisterMessage(vo);
 
@@ -156,12 +127,6 @@ public class UserService {
         return true;
     }
 
-    /**
-     * 用户登录
-     * @param response
-     * @param loginVo
-     * @return
-     */
     public boolean login(HttpServletResponse response , LoginVo loginVo) {
         if(loginVo ==null){
             throw  new GlobleException(SYSTEM_ERROR);
@@ -169,9 +134,9 @@ public class UserService {
 
         String mobile =loginVo.getMobile();
         String password =loginVo.getPassword();
-        User user = getUserName(mobile);
+        MiaoshaUser user = getByNickName(mobile);
         if(user == null) {
-            throw new GlobleException(USER_NOT_EXIST);
+            throw new GlobleException(MOBILE_NOT_EXIST);
         }
 
         String dbPass = user.getPassword();
@@ -187,12 +152,6 @@ public class UserService {
     }
 
 
-    /**
-     * 创建token
-     * @param response
-     * @param loginVo
-     * @return
-     */
     public String createToken(HttpServletResponse response , LoginVo loginVo) {
         if(loginVo ==null){
             throw  new GlobleException(SYSTEM_ERROR);
@@ -200,7 +159,7 @@ public class UserService {
 
         String mobile =loginVo.getMobile();
         String password =loginVo.getPassword();
-        User user = getUserName(mobile);
+        MiaoshaUser user = getByNickName(mobile);
         if(user == null) {
             throw new GlobleException(MOBILE_NOT_EXIST);
         }
@@ -216,22 +175,12 @@ public class UserService {
         addCookie(response, token, user);
         return token ;
     }
-
-    /**
-     * 把token写入cookie
-     * @param response
-     * @param token
-     * @param user
-     */
-    private void addCookie(HttpServletResponse response, String token, User user) {
-        redisService.set(UserKey.token, token, user);
+    private void addCookie(HttpServletResponse response, String token, MiaoshaUser user) {
+        redisService.set(MiaoShaUserKey.token, token, user);
         Cookie cookie = new Cookie(COOKIE_NAME_TOKEN, token);
         //设置有效期
-        cookie.setMaxAge(UserKey.token.expireSeconds());
+        cookie.setMaxAge(MiaoShaUserKey.token.expireSeconds());
         cookie.setPath("/");
         response.addCookie(cookie);
     }
-
-
-
 }

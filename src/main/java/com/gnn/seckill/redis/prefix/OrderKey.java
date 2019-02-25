@@ -1,8 +1,5 @@
-package com.gnn.seckill.redis;
+package com.gnn.seckill.redis.prefix;
 
-/**
- * 订单相关的key
- */
 public class OrderKey extends BasePrefix {
 
     public OrderKey( String prefix) {

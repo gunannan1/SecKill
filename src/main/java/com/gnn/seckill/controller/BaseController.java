@@ -1,8 +1,8 @@
 package com.gnn.seckill.controller;
 
 
-import com.gnn.seckill.redis.KeyPrefix;
 import com.gnn.seckill.redis.RedisService;
+import com.gnn.seckill.redis.prefix.KeyPrefix;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
