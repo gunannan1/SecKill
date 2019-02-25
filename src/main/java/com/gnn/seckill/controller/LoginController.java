@@ -2,8 +2,7 @@ package com.gnn.seckill.controller;
 
 
 import com.gnn.seckill.common.Result;
-import com.gnn.seckill.redis.redismanager.RedisLua;
-import com.gnn.seckill.service.UserService;
+import com.gnn.seckill.service.MiaoShaUserService;
 import com.gnn.seckill.vo.LoginVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,8 +15,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
-import static com.gnn.seckill.common.Constant.COUNTLOGIN;
-
 
 @Controller
 public class LoginController {
@@ -25,17 +22,17 @@ public class LoginController {
     private static Logger logger = LoggerFactory.getLogger(LoginController.class);
 
     @Autowired
-    private UserService userService;
+    private MiaoShaUserService userService;
 
     @RequestMapping("/login")
-    public String login(LoginVo loginVo, Model model) {
+    public String tologin(LoginVo loginVo, Model model) {
         logger.info(loginVo.toString());
-        //未完成
+
+        //TODO  lua记录登录次数
 //        RedisLua.vistorCount(COUNTLOGIN);
 //        String count = RedisLua.getVistorCount(COUNTLOGIN).toString();
 //        logger.info("访问网站的次数为:{}",count);
 //        model.addAttribute("count",count);
-
         return "login";
     }
 

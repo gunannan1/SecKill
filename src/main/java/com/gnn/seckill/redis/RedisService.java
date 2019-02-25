@@ -1,6 +1,7 @@
 package com.gnn.seckill.redis;
 
 import com.alibaba.fastjson.JSON;
+import com.gnn.seckill.redis.prefix.KeyPrefix;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -69,7 +70,7 @@ public class RedisService {
 	/**
 	 * 获取对象
 	 * */
-	public <T> T get(KeyPrefix prefix, String key,  Class<T> clazz) {
+	public <T> T get(KeyPrefix prefix, String key, Class<T> clazz) {
 		 Jedis jedis = null;
 		 try {
 			 jedis =  jedisPool.getResource();

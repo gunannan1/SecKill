@@ -1,5 +1,6 @@
 package com.gnn.seckill.validator;
 
+import com.gnn.seckill.annotation.MobileCheck;
 import com.gnn.seckill.utils.ValidatorUtil;
 import org.apache.commons.lang3.StringUtils;
 

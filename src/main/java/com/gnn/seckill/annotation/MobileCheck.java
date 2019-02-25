@@ -1,4 +1,6 @@
-package com.gnn.seckill.validator;
+package com.gnn.seckill.annotation;
+
+import com.gnn.seckill.validator.MobileValidator;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;

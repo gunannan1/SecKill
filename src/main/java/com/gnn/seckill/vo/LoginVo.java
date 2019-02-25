@@ -1,6 +1,6 @@
 package com.gnn.seckill.vo;
 
-import com.gnn.seckill.validator.MobileCheck;
+import com.gnn.seckill.annotation.MobileCheck;
 import lombok.*;
 import org.hibernate.validator.constraints.Length;
 
