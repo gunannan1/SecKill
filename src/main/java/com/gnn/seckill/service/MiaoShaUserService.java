@@ -72,6 +72,7 @@ public class MiaoShaUserService {
 
 
     // http://blog.csdn.net/tTU1EvLDeLFq5btqiK/article/details/78693323
+    //先更新数据库再删除缓存
     public boolean updatePassword(String token, String nickName, String formPass) {
         //取user
         MiaoshaUser user = getByNickName(nickName);

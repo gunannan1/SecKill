@@ -1,19 +1,14 @@
 package com.gnn.seckill.rabbitmq;
 
 
-import com.gnn.seckill.model.MiaoshaOrder;
-import com.gnn.seckill.model.User;
 import com.gnn.seckill.redis.RedisService;
-//import com.gnn.seckill.service.GoodsService;
 import com.gnn.seckill.service.MiaoShaMessageService;
-//import com.gnn.seckill.service.MiaoshaService;
-//import com.gnn.seckill.service.OrderService;
-import com.gnn.seckill.vo.GoodsVo;
 import com.gnn.seckill.vo.MiaoShaMessageVo;
 import com.rabbitmq.client.Channel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.core.Message;
+import org.springframework.amqp.rabbit.annotation.RabbitHandler;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,7 +28,7 @@ public class MQReceiver {
 //
 //		@Autowired
 //		OrderService orderService;
-//
+		
 //		@Autowired
 //		MiaoshaService miaoshaService;
 
@@ -44,7 +39,7 @@ public class MQReceiver {
 //		public void receive(String message) {
 //			log.info("receive message:"+message);
 //			MiaoshaMessage mm  = RedisService.stringToBean(message, MiaoshaMessage.class);
-//			User user = mm.getUser();
+//			MiaoshaUser user = mm.getUser();
 //			long goodsId = mm.getGoodsId();
 //
 //			GoodsVo goods = goodsService.getGoodsVoByGoodsId(goodsId);
@@ -53,7 +48,7 @@ public class MQReceiver {
 //	    		return;
 //	    	}
 //	    	//判断是否已经秒杀到了
-//	    	MiaoshaOrder order = orderService.getMiaoshaOrderByUserIdGoodsId(Long.valueOf(user.getUsername()), goodsId);
+//	    	MiaoshaOrder order = orderService.getMiaoshaOrderByUserIdGoodsId(Long.valueOf(user.getNickname()), goodsId);
 //	    	if(order != null) {
 //	    		return;
 //	    	}
@@ -70,5 +65,5 @@ public class MQReceiver {
 		channel.basicAck(message.getMessageProperties().getDeliveryTag(), true);
 		MiaoShaMessageVo msm  = RedisService.stringToBean(messRegister, MiaoShaMessageVo.class);
 		messageService.insertMs(msm);
-	}
+		}
 }
