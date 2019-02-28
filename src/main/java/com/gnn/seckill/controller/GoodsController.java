@@ -57,6 +57,7 @@ public class GoodsController extends BaseController {
         model.addAttribute("user", user);
         List<GoodsVo> goodsList = goodsService.listGoodsVo();
         model.addAttribute("goodsList", goodsList);
+//        System.out.println("已被访问");
         return render(request,response,model,"goods_list", GoodsKey.getGoodsList,"");
     }
 

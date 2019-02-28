@@ -262,8 +262,8 @@ public class MiaoshaController implements InitializingBean {
 
         List<GoodsVo> goodsList = goodsService.listGoodsVo();
         for(GoodsVo goods : goodsList) {
-            goods.setStockCount(10);
-            redisService.set(GoodsKey.getMiaoshaGoodsStock, ""+goods.getId(), 10);
+            goods.setStockCount(2000);
+            redisService.set(GoodsKey.getMiaoshaGoodsStock, ""+goods.getId(), 2000);
             localOverMap.put(goods.getId(), false);
         }
         redisService.delete(OrderKey.getMiaoshaOrderByUidGid);

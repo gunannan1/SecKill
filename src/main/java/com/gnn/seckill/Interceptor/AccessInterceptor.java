@@ -45,7 +45,7 @@ public class AccessInterceptor  extends HandlerInterceptorAdapter{
 		 * 获取调用 获取主要方法
 		 */
 		if(handler instanceof HandlerMethod) {
-			logger.info("打印拦截方法handler ：{} ",handler);
+//			logger.info("打印拦截方法handler ：{} ",handler);
 			HandlerMethod hm = (HandlerMethod)handler;
 			//方便mybatis 测试
 //			if(hm.getMethod().getName().startsWith("test")){

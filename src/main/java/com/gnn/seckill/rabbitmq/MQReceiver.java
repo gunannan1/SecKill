@@ -14,6 +14,7 @@ import com.rabbitmq.client.Channel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.core.Message;
+import org.springframework.amqp.rabbit.annotation.Queue;
 import org.springframework.amqp.rabbit.annotation.RabbitHandler;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,7 +42,7 @@ public class MQReceiver {
 		@Autowired
 		MiaoShaMessageService messageService ;
 		
-		@RabbitListener(queues=MQConfig.MIAOSHA_QUEUE)
+		@RabbitListener(queuesToDeclare =@Queue(MQConfig.MIAOSHA_QUEUE))
 		public void receive(String message) {
 			log.info("receive message:"+message);
 			MiaoshaMessage mm  = RedisService.stringToBean(message, MiaoshaMessage.class);
@@ -64,7 +65,7 @@ public class MQReceiver {
 
 
 
-	@RabbitListener(queues=MQConfig.MIAOSHATEST)
+	@RabbitListener(queuesToDeclare =@Queue(MQConfig.MIAOSHATEST))
 	public void receiveMiaoShaMessage(Message message, Channel channel) throws IOException {
 		log.info("接受到的消息为:{}",message);
 		String messRegister = new String(message.getBody(), "UTF-8");
