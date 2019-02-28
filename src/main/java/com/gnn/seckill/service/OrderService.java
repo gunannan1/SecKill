@@ -75,5 +75,13 @@ public class OrderService {
 		}
 	}
 
+	/**
+	 * 删除订单
+	 */
+	public void deleteOrders() {
+		orderDao.deleteOrders();
+		orderDao.deleteMiaoshaOrders();
+	}
+
 	
 }

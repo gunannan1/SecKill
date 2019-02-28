@@ -1,12 +1,15 @@
-package com.gnn.seckill.access;
+package com.gnn.seckill.Interceptor;
 
 import com.alibaba.fastjson.JSON;
 
+import com.gnn.seckill.annotation.AccessLimit;
 import com.gnn.seckill.common.Result;
+import com.gnn.seckill.common.UserContext;
 import com.gnn.seckill.enums.ResultStatus;
-import com.gnn.seckill.model.User;
+import com.gnn.seckill.model.MiaoshaUser;
 import com.gnn.seckill.redis.RedisService;
-import com.gnn.seckill.service.UserService;
+import com.gnn.seckill.redis.prefix.AccessKey;
+import com.gnn.seckill.service.MiaoShaUserService;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,7 +33,7 @@ public class AccessInterceptor  extends HandlerInterceptorAdapter{
 	private static Logger logger = LoggerFactory.getLogger(AccessInterceptor.class);
 
 	@Autowired
-    UserService userService;
+	MiaoShaUserService userService;
 
 	@Autowired
 	RedisService redisService;
@@ -48,10 +51,7 @@ public class AccessInterceptor  extends HandlerInterceptorAdapter{
 //			if(hm.getMethod().getName().startsWith("test")){
 //				return true;
 //			}
-			User user = getUser(request, response);
-			if(user==null){
-                response.sendRedirect("/login");
-            }
+			MiaoshaUser user = getUser(request, response);
 			UserContext.setUser(user);
 			AccessLimit accessLimit = hm.getMethodAnnotation(AccessLimit.class);
 			if(accessLimit == null) {
@@ -66,12 +66,11 @@ public class AccessInterceptor  extends HandlerInterceptorAdapter{
 					render(response, SESSION_ERROR);
 					return false;
 				}
-				key += "_" + user.getUsername();
+				key += "_" + user.getNickname();
 			}else {
 				//do nothing
 			}
-            //通过redis找到登录的次数，如果超过最大次数，则返回错误信息
-            AccessKey ak = AccessKey.withExpire(seconds);
+			AccessKey ak = AccessKey.withExpire(seconds);
 			Integer count = redisService.get(ak, key, Integer.class);
 	    	if(count  == null) {
 	    		 redisService.set(ak, key, 1);
@@ -91,12 +90,6 @@ public class AccessInterceptor  extends HandlerInterceptorAdapter{
 		UserContext.removeUser();
 	}
 
-    /**
-     *输出错误信息
-     * @param response
-     * @param cm
-     * @throws Exception
-     */
 	private void render(HttpServletResponse response, ResultStatus cm)throws Exception {
 		response.setContentType("application/json;charset=UTF-8");
 		OutputStream out = response.getOutputStream();
@@ -106,15 +99,9 @@ public class AccessInterceptor  extends HandlerInterceptorAdapter{
 		out.close();
 	}
 
-    /**
-     * 从token里获取用户
-     * @param request
-     * @param response
-     * @return
-     */
-	private User getUser(HttpServletRequest request, HttpServletResponse response) {
-		String paramToken = request.getParameter(UserService.COOKIE_NAME_TOKEN);
-		String cookieToken = getCookieValue(request, UserService.COOKIE_NAME_TOKEN);
+	private MiaoshaUser getUser(HttpServletRequest request, HttpServletResponse response) {
+		String paramToken = request.getParameter(MiaoShaUserService.COOKIE_NAME_TOKEN);
+		String cookieToken = getCookieValue(request, MiaoShaUserService.COOKIE_NAME_TOKEN);
 		if(StringUtils.isEmpty(cookieToken) && StringUtils.isEmpty(paramToken)) {
 			return null;
 		}
@@ -122,12 +109,6 @@ public class AccessInterceptor  extends HandlerInterceptorAdapter{
 		return userService.getByToken(response, token);
 	}
 
-    /**
-     * 得到确定的name的cookie的值
-     * @param request
-     * @param cookiName
-     * @return
-     */
 	private String getCookieValue(HttpServletRequest request, String cookiName) {
 		Cookie[]  cookies = request.getCookies();
 		if(cookies == null || cookies.length <= 0){

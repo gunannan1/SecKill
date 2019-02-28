@@ -17,6 +17,7 @@ import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.List;
 import java.util.Random;
 
 @Service
@@ -197,6 +198,15 @@ public class MiaoshaService {
 		char op2 = ops[rdm.nextInt(3)];
 		String exp = ""+ num1 + op1 + num2 + op2 + num3;
 		return exp;
+	}
+
+	/**
+	 *测试时重置数据
+	 * @param goodsList
+	 */
+	public void reset(List<GoodsVo> goodsList) {
+		goodsService.resetStock(goodsList);
+		orderService.deleteOrders();
 	}
 	
 }

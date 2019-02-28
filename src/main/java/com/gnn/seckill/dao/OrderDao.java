@@ -1,6 +1,7 @@
 package com.gnn.seckill.dao;
 
 
+import com.gnn.seckill.model.MiaoshaGoods;
 import com.gnn.seckill.model.MiaoshaOrder;
 import com.gnn.seckill.model.OrderInfo;
 import org.apache.ibatis.annotations.*;
@@ -31,4 +32,13 @@ public interface OrderDao {
 
 	@Select("update order_info set status=0 where id=#{id}")
 	public int closeOrderByOrderInfo();
+
+	@Delete("delete from order_info")
+	public void deleteOrders();
+
+	@Delete("delete from miaosha_order")
+	public void deleteMiaoshaOrders();
+
+
+
 }
