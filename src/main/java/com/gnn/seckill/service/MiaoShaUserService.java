@@ -181,7 +181,9 @@ public class MiaoShaUserService {
         redisService.set(MiaoShaUserKey.token, token, user);
         Cookie cookie = new Cookie(COOKIE_NAME_TOKEN, token);
         //设置有效期
-        cookie.setMaxAge(MiaoShaUserKey.token.expireSeconds());
+//        cookie.setMaxAge(MiaoShaUserKey.token.expireSeconds());
+        cookie.setMaxAge(5*3600*24);
+
         cookie.setPath("/");
         response.addCookie(cookie);
     }
