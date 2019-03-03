@@ -144,11 +144,11 @@ public class MiaoshaController implements InitializingBean {
 //		}
 
         //是否已经秒杀到
-        MiaoshaOrder order = orderService.getMiaoshaOrderByUserIdGoodsId(Long.valueOf(user.getNickname()), goodsId);
-        if (order != null) {
-            result.withError(REPEATE_MIAOSHA.getCode(), REPEATE_MIAOSHA.getMessage());
-            return result;
-        }
+//        MiaoshaOrder order = orderService.getMiaoshaOrderByUserIdGoodsId(Long.valueOf(user.getNickname()), goodsId);
+//        if (order != null) {
+//            result.withError(REPEATE_MIAOSHA.getCode(), REPEATE_MIAOSHA.getMessage());
+//            return result;
+//        }
         //内存标记，减少redis访问
         boolean over = localOverMap.get(goodsId);
         if (over) {
@@ -162,6 +162,13 @@ public class MiaoshaController implements InitializingBean {
             result.withError(MIAO_SHA_OVER.getCode(), MIAO_SHA_OVER.getMessage());
             return result;
         }
+
+        MiaoshaOrder order = orderService.getMiaoshaOrderByUserIdGoodsId(Long.valueOf(user.getNickname()), goodsId);
+        if (order != null) {
+            result.withError(REPEATE_MIAOSHA.getCode(), REPEATE_MIAOSHA.getMessage());
+            return result;
+        }
+
         MiaoshaMessage mm = new MiaoshaMessage();
         mm.setGoodsId(goodsId);
         mm.setUser(user);
@@ -263,7 +270,7 @@ public class MiaoshaController implements InitializingBean {
         List<GoodsVo> goodsList = goodsService.listGoodsVo();
         for(GoodsVo goods : goodsList) {
             goods.setStockCount(2000);
-            redisService.set(GoodsKey.getMiaoshaGoodsStock, ""+goods.getId(), 2000);
+            redisService.set(GoodsKey.getMiaoshaGoodsStock, ""+goods.getId(), 2100);
             localOverMap.put(goods.getId(), false);
         }
         redisService.delete(OrderKey.getMiaoshaOrderByUidGid);

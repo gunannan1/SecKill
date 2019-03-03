@@ -106,6 +106,7 @@ public class AccessInterceptor  extends HandlerInterceptorAdapter{
 			return null;
 		}
 		String token = StringUtils.isEmpty(paramToken)?cookieToken:paramToken;
+
 		return userService.getByToken(response, token);
 	}
 

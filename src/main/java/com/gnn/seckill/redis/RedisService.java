@@ -76,7 +76,9 @@ public class RedisService {
 			 jedis =  jedisPool.getResource();
 			 //生成真正的key
 			 String realKey  = prefix.getPrefix() + key;
+			 System.out.println(realKey);
 			 String  str = jedis.get(realKey);
+			 System.out.println(str);
 			 T t =  stringToBean(str, clazz);
 			 return t;
 		 }finally {
@@ -85,36 +87,36 @@ public class RedisService {
 	}
 
 
-//    public  String get(String key){
-//        Jedis jedis = null;
-//        String result = null;
-//        try {
-//            jedis =  jedisPool.getResource();
-//            result = jedis.get(key);
-//        } catch (Exception e) {
-//            log.error("expire key:{} error",key,e);
-//            jedisPool.returnBrokenResource(jedis);
-//            return result;
-//        }
-//        jedisPool.returnResource(jedis);
-//        return result;
-//    }
-//
-//
-//    public  String getset(String key,String value){
-//        Jedis jedis = null;
-//        String result = null;
-//        try {
-//            jedis =  jedisPool.getResource();
-//            result = jedis.getSet(key,value);
-//        } catch (Exception e) {
-//            log.error("expire key:{} error",key,e);
-//            jedisPool.returnBrokenResource(jedis);
-//            return result;
-//        }
-//        jedisPool.returnResource(jedis);
-//        return result;
-//    }
+    public  String get(String key){
+        Jedis jedis = null;
+        String result = null;
+        try {
+            jedis =  jedisPool.getResource();
+            result = jedis.get(key);
+        } catch (Exception e) {
+            log.error("expire key:{} error",key,e);
+            jedisPool.returnBrokenResource(jedis);
+            return result;
+        }
+        jedisPool.returnResource(jedis);
+        return result;
+    }
+
+
+    public  String getset(String key,String value){
+        Jedis jedis = null;
+        String result = null;
+        try {
+            jedis =  jedisPool.getResource();
+            result = jedis.getSet(key,value);
+        } catch (Exception e) {
+            log.error("expire key:{} error",key,e);
+            jedisPool.returnBrokenResource(jedis);
+            return result;
+        }
+        jedisPool.returnResource(jedis);
+        return result;
+    }
 
 	/**
 	 * 设置对象
@@ -203,20 +205,20 @@ public class RedisService {
 		 }
 	}
 
-//    public  Long del(String key){
-//        Jedis jedis = null;
-//        Long result = null;
-//        try {
-//            jedis =  jedisPool.getResource();
-//            result = jedis.del(key);
-//        } catch (Exception e) {
-//            log.error("del key:{} error",key,e);
-//            jedisPool.returnBrokenResource(jedis);
-//            return result;
-//        }
-//        jedisPool.returnResource(jedis);
-//        return result;
-//    }
+    public  Long del(String key){
+        Jedis jedis = null;
+        Long result = null;
+        try {
+            jedis =  jedisPool.getResource();
+            result = jedis.del(key);
+        } catch (Exception e) {
+            log.error("del key:{} error",key,e);
+            jedisPool.returnBrokenResource(jedis);
+            return result;
+        }
+        jedisPool.returnResource(jedis);
+        return result;
+    }
 
 
 	/**

@@ -49,6 +49,7 @@ public class MiaoShaUserService {
             return null ;
         }
         MiaoshaUser user =redisService.get(MiaoShaUserKey.token,token,MiaoshaUser.class) ;
+
         if(user!=null) {
             addCookie(response, token, user);
         }
