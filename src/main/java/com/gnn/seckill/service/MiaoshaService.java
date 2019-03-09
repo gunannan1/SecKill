@@ -31,6 +31,7 @@ public class MiaoshaService {
 	@Autowired
 	RedisService redisService;
 
+	//可以试试先插入再减库存,插入不加锁，可以并行。更新只能串行
 	@Transactional
 	public OrderInfo miaosha(MiaoshaUser user, GoodsVo goods) {
 		//减库存 下订单 写入秒杀订单
