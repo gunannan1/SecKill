@@ -53,34 +53,41 @@ public class AccessInterceptor  extends HandlerInterceptorAdapter{
 //			}
 			MiaoshaUser user = getUser(request, response);
 			UserContext.setUser(user);
-			AccessLimit accessLimit = hm.getMethodAnnotation(AccessLimit.class);
-			if(accessLimit == null) {
-				return true;
-			}
-			int seconds = accessLimit.seconds();
-			int maxCount = accessLimit.maxCount();
-			boolean needLogin = accessLimit.needLogin();
-			String key = request.getRequestURI();
-			if(needLogin) {
-				if(user == null) {
-					render(response, SESSION_ERROR);
-					return false;
-				}
-				key += "_" + user.getNickname();
-			}else {
-				//do nothing
-			}
-			AccessKey ak = AccessKey.withExpire(seconds);
-			Integer count = redisService.get(ak, key, Integer.class);
-	    	if(count  == null) {
-	    		 redisService.set(ak, key, 1);
-	    	}else if(count < maxCount) {
-	    		 redisService.incr(ak, key);
-	    	}else {
-	    		render(response, ACCESS_LIMIT_REACHED);
-	    		return false;
-	    	}
+
+
+
+//			AccessLimit accessLimit = hm.getMethodAnnotation(AccessLimit.class);
+//			if(accessLimit == null) {
+//				return true;
+//			}
+//			int seconds = accessLimit.seconds();
+//			int maxCount = accessLimit.maxCount();
+//			boolean needLogin = accessLimit.needLogin();
+//			String key = request.getRequestURI();
+//			if(needLogin) {
+//				if(user == null) {
+//					render(response, SESSION_ERROR);
+//					return false;
+//				}
+//				key += "_" + user.getNickname();
+//			}else {
+//				//do nothing
+//			}
+//			AccessKey ak = AccessKey.withExpire(seconds);
+//			Integer count = redisService.get(ak, key, Integer.class);
+//	    	if(count  == null) {
+//	    		 redisService.set(ak, key, 1);
+//	    	}else if(count < maxCount) {
+//	    		 redisService.incr(ak, key);
+//	    	}else {
+//	    		render(response, ACCESS_LIMIT_REACHED);
+//	    		return false;
+//	    	}
+
+
 		}
+
+
 		return true;
 	}
 
